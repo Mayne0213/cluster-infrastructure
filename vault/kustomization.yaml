@@ -9,3 +9,4 @@ resources:
   # External Secrets integration
   - serviceaccount.yaml
   - cluster-secret-store.yaml
+  - vault-config-job.yaml
