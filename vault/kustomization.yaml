@@ -6,5 +6,6 @@ resources:
   # - argocd/vault.yaml
   # - argocd/vault-secrets.yaml
 
-  # Cluster-wide Secret Store for External Secrets
+  # External Secrets integration
+  - serviceaccount.yaml
   - cluster-secret-store.yaml
