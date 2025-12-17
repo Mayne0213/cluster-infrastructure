@@ -9,3 +9,4 @@ resources:
   - ingress-nginx/argocd/ingress-nginx.yaml
   - reloader/argocd/reloader.yaml
   - vault/argocd/vault.yaml
+  - vault/argocd/vault-secrets.yaml
