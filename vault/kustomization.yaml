@@ -5,3 +5,6 @@ resources:
   # ArgoCD Application 리소스는 infrastructure/kustomization.yaml에서 관리
   # - argocd/vault.yaml
   # - argocd/vault-secrets.yaml
+
+  # Cluster-wide Secret Store for External Secrets
+  - cluster-secret-store.yaml
