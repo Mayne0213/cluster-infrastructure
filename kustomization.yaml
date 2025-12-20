@@ -9,7 +9,6 @@ resources:
   - cert-manager/argocd/cert-manager.yaml
   - cert-manager/argocd/cert-manager-issuers.yaml
   - external-secrets/argocd/external-secrets.yaml
-  - harbor/argocd/harbor.yaml
   - ingress-nginx/argocd/ingress-nginx.yaml
   - reloader/argocd/reloader.yaml
   - vault/argocd/vault.yaml
