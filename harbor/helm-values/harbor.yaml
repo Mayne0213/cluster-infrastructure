@@ -1,0 +1,119 @@
+# Harbor Helm Values
+# Chart: https://github.com/goharbor/harbor-helm
+
+# Expose configuration
+expose:
+  type: ingress
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-tls
+      notarySecretName: harbor-notary-tls
+  ingress:
+    hosts:
+      core: harbor0213.kro.kr
+      notary: notary0213.kro.kr
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+# External URL
+externalURL: https://harbor0213.kro.kr
+
+# Harbor admin password (change after initial setup)
+harborAdminPassword: "Harbor12345"
+
+# Persistence configuration
+persistence:
+  enabled: true
+  resourcePolicy: "keep"
+  persistentVolumeClaim:
+    registry:
+      size: 20Gi
+    chartmuseum:
+      size: 5Gi
+    jobservice:
+      jobLog:
+        size: 1Gi
+    database:
+      size: 2Gi
+    redis:
+      size: 1Gi
+    trivy:
+      size: 5Gi
+
+# Resource limits - adjusted for smaller cluster
+portal:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+core:
+  resources:
+    requests:
+      cpu: 20m
+      memory: 128Mi
+
+jobservice:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 128Mi
+
+registry:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 128Mi
+
+chartmuseum:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+trivy:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+
+notary:
+  server:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+  signer:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+
+database:
+  internal:
+    resources:
+      requests:
+        cpu: 20m
+        memory: 256Mi
+
+redis:
+  internal:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+
+# Disable unnecessary components for initial setup
+notary:
+  enabled: false
+
+# Metrics
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: false
