@@ -2,23 +2,11 @@
 # Chart: https://github.com/goharbor/harbor-helm
 
 # Expose configuration
+# Ingress는 cluster-infrastructure/ingress-nginx/ingress.yaml에서 중앙 관리
 expose:
-  type: ingress
+  type: clusterIP
   tls:
-    enabled: true
-    certSource: secret
-    secret:
-      secretName: harbor-tls
-      notarySecretName: harbor-notary-tls
-  ingress:
-    hosts:
-      core: harbor0213.kro.kr
-      notary: notary0213.kro.kr
-    className: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    enabled: false
 
 # External URL
 externalURL: https://harbor0213.kro.kr
