@@ -488,17 +488,10 @@ metadata:
   name: kubernetes-dashboard-ingress
   namespace: kubernetes-dashboard
   annotations:
-    # HTTP를 HTTPS로 자동 리다이렉트
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # cert-manager가 인증서를 자동으로 발급하도록 설정
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # WebSocket 지원 (Dashboard에 필요)
-    nginx.ingress.kubernetes.io/websocket-services: "kubernetes-dashboard-kong-proxy"
     # Kong 프록시는 HTTPS를 사용
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    # 프록시 버퍼 설정
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
+    haproxy.org/server-ssl: "true"
+    haproxy.org/ssl-redirect: "true"
 spec:
   ingressClassName: haproxy
   # TLS 설정
@@ -662,17 +655,9 @@ metadata:
   namespace: argocd
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     # ArgoCD는 내부적으로 HTTPS를 사용
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    # 자체 서명된 인증서 허용
-    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-    # 프록시 버퍼 설정
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    haproxy.org/server-ssl: "true"
+    haproxy.org/ssl-redirect: "true"
 spec:
   ingressClassName: haproxy
   tls:
