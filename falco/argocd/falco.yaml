@@ -98,6 +98,7 @@ spec:
       - PruneLast=true
       - ServerSideApply=true
       - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
 
     retry:
       limit: 5
@@ -111,7 +112,14 @@ spec:
   ignoreDifferences:
     - group: apps
       kind: StatefulSet
+      name: falco-falcosidekick-ui-redis
       jsonPointers:
         - /spec/persistentVolumeClaimRetentionPolicy
+      jqPathExpressions:
+        - .spec.persistentVolumeClaimRetentionPolicy
+    - group: apps
+      kind: StatefulSet
+      managedFieldsManagers:
+        - kube-controller-manager
 
   revisionHistoryLimit: 10
