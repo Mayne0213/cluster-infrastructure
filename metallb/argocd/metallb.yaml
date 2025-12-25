@@ -52,6 +52,10 @@ spec:
             - effect: NoSchedule
               key: node-role.kubernetes.io/control-plane
 
+        # Disable FRR (only needed for BGP mode, we use L2)
+        frr:
+          enabled: false
+
         # Prometheus metrics
         prometheus:
           scrapeAnnotations: true
