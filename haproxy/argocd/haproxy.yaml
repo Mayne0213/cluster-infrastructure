@@ -1,0 +1,149 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: haproxy-ingress
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  source:
+    # Helm chart from HAProxy Ingress repository
+    repoURL: https://haproxy-ingress.github.io/charts
+    chart: haproxy-ingress
+    targetRevision: 0.14.7
+    helm:
+      values: |
+        # Controller configuration
+        controller:
+          name: haproxy-ingress
+
+          # IngressClass name (different from nginx)
+          ingressClass: haproxy
+          ingressClassResource:
+            name: haproxy
+            enabled: true
+            default: false  # Keep nginx as default initially
+
+          # Replica count
+          replicaCount: 2
+
+          # Resource requests
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          # Service configuration
+          service:
+            type: LoadBalancer
+            annotations: {}
+            # Use different IP or port from nginx
+            # externalTrafficPolicy: Local
+
+          # Metrics
+          stats:
+            enabled: true
+            port: 1024
+
+          # Prometheus metrics
+          metrics:
+            enabled: true
+            port: 9101
+            serviceMonitor:
+              enabled: true
+
+          # Log level
+          logging:
+            level: info
+
+          # HAProxy configuration options
+          config:
+            # SSL/TLS
+            ssl-redirect: "true"
+
+            # Timeouts
+            timeout-client: "50s"
+            timeout-client-fin: "50s"
+            timeout-connect: "5s"
+            timeout-http-request: "5s"
+            timeout-queue: "5s"
+            timeout-server: "50s"
+            timeout-server-fin: "50s"
+            timeout-tunnel: "1h"
+
+            # Performance
+            maxconn: "2000"
+
+            # Rate limiting support
+            rate-limit-requests: "0"
+
+          # Host network (optional, for better performance)
+          hostNetwork: false
+
+          # Node selector
+          nodeSelector: {}
+
+          # Tolerations
+          tolerations: []
+
+          # Affinity
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app.kubernetes.io/name
+                          operator: In
+                          values:
+                            - haproxy-ingress
+                    topologyKey: kubernetes.io/hostname
+
+        # Default backend
+        defaultBackend:
+          enabled: true
+          replicaCount: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+
+        # RBAC
+        rbac:
+          create: true
+
+        # Service Account
+        serviceAccount:
+          create: true
+          name: haproxy-ingress
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: haproxy-ingress
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true
+
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  revisionHistoryLimit: 10

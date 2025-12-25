@@ -20,3 +20,4 @@ resources:
   - velero
   - falco/argocd/falco.yaml
   - cnpg/argocd/cnpg.yaml
+  - haproxy/argocd/haproxy.yaml
