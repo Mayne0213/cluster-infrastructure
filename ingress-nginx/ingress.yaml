@@ -655,8 +655,6 @@ metadata:
   namespace: argocd
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # ArgoCD는 내부적으로 HTTPS를 사용
-    haproxy.org/server-ssl: "true"
     haproxy.org/ssl-redirect: "true"
 spec:
   ingressClassName: haproxy
@@ -674,7 +672,7 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 443
+              number: 80
 
 ---
 # MAS (Multi-Agent System) Ingress
