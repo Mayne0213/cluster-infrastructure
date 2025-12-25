@@ -12,7 +12,7 @@ spec:
     # Helm chart from Falcosecurity repository
     repoURL: https://falcosecurity.github.io/charts
     chart: falco
-    targetRevision: 4.14.2
+    targetRevision: 4.20.0
     helm:
       values: |
         # Driver configuration - use modern_ebpf
@@ -20,11 +20,11 @@ spec:
           enabled: true
           kind: modern_ebpf
 
-        # Image configuration - use regular falco image for modern_ebpf
+        # Image configuration - use latest falco image for kernel 6.14 support
         image:
           registry: docker.io
           repository: falcosecurity/falco
-          tag: 0.39.2
+          tag: 0.40.1
 
         # Resource requests
         resources:
