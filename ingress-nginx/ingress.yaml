@@ -491,6 +491,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     # Kong 프록시는 HTTPS를 사용
     haproxy.org/server-ssl: "true"
+    haproxy.org/ssl-verify: "none"
     haproxy.org/ssl-redirect: "true"
 spec:
   ingressClassName: haproxy
