@@ -24,7 +24,10 @@ spec:
           ingressClassResource:
             name: haproxy
             enabled: true
-            default: false  # Keep nginx as default initially
+            default: true  # Set as default ingress controller
+
+          # Watch all ingress resources (including those without ingressClassName)
+          watchIngressWithoutClass: true
 
           # Replica count
           replicaCount: 2

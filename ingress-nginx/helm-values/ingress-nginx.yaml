@@ -17,13 +17,13 @@ controller:
   # Allow snippet annotations
   allowSnippetAnnotations: true
   
-  # Watch all namespaces
-  watchIngressWithoutClass: true
-  
-  # Service configuration
+  # Watch only nginx ingressClass (HAProxy now handles all ingresses)
+  watchIngressWithoutClass: false
+
+  # Service configuration - Changed to ClusterIP (backup mode, HAProxy is now primary)
   service:
-    type: LoadBalancer
-    externalTrafficPolicy: Local
+    type: ClusterIP
+    # externalTrafficPolicy: Local  # Not needed for ClusterIP
   
   # Admission webhooks
   admissionWebhooks:
