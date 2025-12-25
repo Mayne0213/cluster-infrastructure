@@ -7,3 +7,4 @@ resources:
 
   # Velero credentials from Vault
   - external-secret.yaml
+  - ingress/velero-ui-ingress.yaml

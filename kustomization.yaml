@@ -9,7 +9,6 @@ resources:
   - cert-manager/argocd/cert-manager.yaml
   - cert-manager/argocd/cert-manager-issuers.yaml
   - external-secrets/argocd/external-secrets.yaml
-  - ingress/ingresses.yaml
   - reloader/argocd/reloader.yaml
   - vault/argocd/vault.yaml
   - vault/argocd/vault-secrets.yaml
@@ -17,7 +16,7 @@ resources:
   # New infrastructure components
   - velero/argocd/velero.yaml
   - velero/argocd/velero-ui.yaml
-  - velero
+  - velero  # Includes Velero Ingress
   - falco/argocd/falco.yaml
   - falco  # Includes Falco Ingress
   - cnpg/argocd/cnpg.yaml
@@ -26,7 +25,4 @@ resources:
   - metallb
 
   # ArgoCD configuration
-  - argocd/argocd-cmd-params-cm.yaml
-
-  # Temporary: Velero UI Ingress (will move to velero folder)
-  - ingress/velero-ui-ingress.yaml
+  - argocd  # Includes ArgoCD Ingress and configuration
