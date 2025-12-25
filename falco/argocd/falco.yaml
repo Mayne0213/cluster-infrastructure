@@ -20,11 +20,11 @@ spec:
           enabled: true
           kind: modern_ebpf
 
-        # Image configuration - use latest falco image for kernel 6.14 support
+        # Image configuration - use Falco 0.40.0 for kernel 6.14 support
         image:
           registry: docker.io
           repository: falcosecurity/falco
-          tag: 0.40.1
+          tag: 0.40.0
 
         # Resource requests
         resources:
