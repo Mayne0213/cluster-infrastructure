@@ -17,6 +17,7 @@ resources:
 
   # New infrastructure components
   - velero/argocd/velero.yaml
+  - velero/argocd/velero-ui.yaml
   - velero
   - falco/argocd/falco.yaml
   - cnpg/argocd/cnpg.yaml
@@ -26,3 +27,4 @@ resources:
 
   # Ingress resources for HAProxy
   - ingress/falco-ui-ingress.yaml
+  - ingress/velero-ui-ingress.yaml
