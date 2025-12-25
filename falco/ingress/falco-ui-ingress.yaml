@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: falco-ui-ingress
+  namespace: falco
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: haproxy
+  tls:
+    - hosts:
+        - falco0213.kro.kr
+      secretName: falco-ui-tls
+  rules:
+    - host: falco0213.kro.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: falco-falcosidekick-ui
+                port:
+                  number: 2802
