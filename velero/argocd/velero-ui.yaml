@@ -42,11 +42,16 @@ spec:
         env: []
         envFrom: []
 
-        # Security context
-        securityContext:
+        # Pod security context
+        podSecurityContext:
           runAsNonRoot: true
           runAsUser: 1000
           fsGroup: 1000
+
+        # Container security context
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
 
         # Service account
         serviceAccount:
