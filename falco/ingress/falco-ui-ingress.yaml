@@ -5,6 +5,7 @@ metadata:
   namespace: falco
   annotations:
     # cert-manager.io/cluster-issuer: letsencrypt-prod  # Disabled due to rate limit
+    haproxy.org/ssl-redirect: "false"  # Disable SSL redirect temporarily
 spec:
   ingressClassName: haproxy
   # TLS disabled temporarily due to Let's Encrypt rate limit
