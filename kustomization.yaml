@@ -20,11 +20,11 @@ resources:
   - velero/argocd/velero-ui.yaml
   - velero
   - falco/argocd/falco.yaml
+  - falco  # Includes Falco Ingress
   - cnpg/argocd/cnpg.yaml
   - haproxy/argocd/haproxy.yaml
   - metallb/argocd/metallb.yaml
   - metallb
 
-  # Ingress resources for HAProxy
-  - ingress/falco-ui-ingress.yaml
+  # Temporary: Velero UI Ingress (will move to velero folder)
   - ingress/velero-ui-ingress.yaml

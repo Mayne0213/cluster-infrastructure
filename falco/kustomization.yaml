@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
   # ArgoCD Application 리소스는 root kustomization.yaml에서 관리
   # - argocd/falco.yaml
+
+  # Falco UI Ingress
+  - ingress/falco-ui-ingress.yaml
