@@ -4,15 +4,14 @@ metadata:
   name: falco-ui-ingress
   namespace: falco
   annotations:
-    # cert-manager.io/cluster-issuer: letsencrypt-prod  # Disabled due to rate limit
-    haproxy.org/ssl-redirect: "false"  # Disable SSL redirect temporarily
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    haproxy.org/ssl-redirect: "true"
 spec:
   ingressClassName: haproxy
-  # TLS disabled temporarily due to Let's Encrypt rate limit
-  # tls:
-  #   - hosts:
-  #       - falco0213.kro.kr
-  #     secretName: falco-ui-tls
+  tls:
+    - hosts:
+        - falco0213.kro.kr
+      secretName: falco-ui-tls
   rules:
     - host: falco0213.kro.kr
       http:

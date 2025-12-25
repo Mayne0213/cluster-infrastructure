@@ -4,7 +4,7 @@
 # Image configuration
 image:
   repository: velero/velero
-  tag: v1.15.0
+  tag: v1.17.1
   pullPolicy: IfNotPresent
 
 # Resource requests
@@ -20,7 +20,7 @@ resources:
 initContainers:
   # AWS plugin for S3-compatible storage (Minio)
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.11.0
+    image: velero/velero-plugin-for-aws:v1.13.1
     volumeMounts:
       - mountPath: /target
         name: plugins
@@ -70,20 +70,6 @@ schedules:
         - kube-system
         - kube-public
         - kube-node-lease
-      snapshotVolumes: true
-
-  # Hourly backup for critical namespaces
-  hourly-critical-backup:
-    disabled: false
-    schedule: "0 * * * *"  # Every hour
-    template:
-      ttl: 168h  # 7 days
-      includedNamespaces:
-        - postgresql
-        - postgresql-dev
-        - vault
-        - gitea
-        - harbor
       snapshotVolumes: true
 
 # Metrics
