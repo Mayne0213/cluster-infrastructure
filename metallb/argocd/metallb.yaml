@@ -1,0 +1,98 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  source:
+    # Helm chart from MetalLB repository
+    repoURL: https://metallb.github.io/metallb
+    chart: metallb
+    targetRevision: 0.14.9
+    helm:
+      values: |
+        # Controller configuration
+        controller:
+          enabled: true
+          image:
+            repository: quay.io/metallb/controller
+            tag: v0.14.9
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+
+        # Speaker configuration (runs on each node)
+        speaker:
+          enabled: true
+          image:
+            repository: quay.io/metallb/speaker
+            tag: v0.14.9
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+
+          # Tolerations to run on all nodes
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+
+        # Prometheus metrics
+        prometheus:
+          scrapeAnnotations: true
+          metricsPort: 7472
+
+        # RBAC
+        rbac:
+          create: true
+
+        # Service Accounts
+        controller:
+          serviceAccount:
+            create: true
+            name: metallb-controller
+
+        speaker:
+          serviceAccount:
+            create: true
+            name: metallb-speaker
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true
+
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  revisionHistoryLimit: 10

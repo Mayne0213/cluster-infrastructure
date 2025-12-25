@@ -21,3 +21,5 @@ resources:
   - falco/argocd/falco.yaml
   - cnpg/argocd/cnpg.yaml
   - haproxy/argocd/haproxy.yaml
+  - metallb/argocd/metallb.yaml
+  - metallb
