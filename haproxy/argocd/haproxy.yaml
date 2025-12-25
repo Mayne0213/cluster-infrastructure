@@ -29,6 +29,10 @@ spec:
           # Watch all ingress resources (including those without ingressClassName)
           watchIngressWithoutClass: true
 
+          # Extra arguments to pass to the controller
+          extraArgs:
+            watch-ingress-without-class: "true"
+
           # Replica count
           replicaCount: 2
 
