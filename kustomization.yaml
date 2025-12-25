@@ -26,5 +26,8 @@ resources:
   - metallb/argocd/metallb.yaml
   - metallb
 
+  # ArgoCD configuration
+  - argocd/argocd-cmd-params-cm.yaml
+
   # Temporary: Velero UI Ingress (will move to velero folder)
   - ingress/velero-ui-ingress.yaml
