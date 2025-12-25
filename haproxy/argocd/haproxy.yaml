@@ -105,17 +105,9 @@ spec:
                             - haproxy-ingress
                     topologyKey: kubernetes.io/hostname
 
-        # Default backend
+        # Default backend (disabled - not needed for most use cases)
         defaultBackend:
-          enabled: true
-          replicaCount: 1
-          resources:
-            requests:
-              cpu: 10m
-              memory: 32Mi
-            limits:
-              cpu: 50m
-              memory: 64Mi
+          enabled: false
 
         # RBAC
         rbac:
