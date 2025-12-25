@@ -1,0 +1,178 @@
+# Falco Helm Values
+# Chart: https://github.com/falcosecurity/charts/tree/master/charts/falco
+
+# Driver configuration - use eBPF for better compatibility
+driver:
+  enabled: true
+  kind: ebpf  # or "module" for kernel module
+
+# Image configuration
+image:
+  registry: docker.io
+  repository: falcosecurity/falco-no-driver
+  tag: 0.39.2
+
+# Resource requests
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+# Falco configuration
+falco:
+  # Enable JSON output for better parsing
+  json_output: true
+  json_include_output_property: true
+
+  # Log to stdout
+  log_stderr: true
+  log_syslog: false
+  log_level: info
+
+  # Performance tuning
+  buffered_outputs: true
+  outputs_queue_capacity: 10000
+
+  # Rules configuration
+  rules_files:
+    - /etc/falco/falco_rules.yaml
+    - /etc/falco/falco_rules.local.yaml
+    - /etc/falco/rules.d
+
+  # Load default rules
+  load_plugins: []
+
+# Custom rules (add to this section)
+customRules:
+  custom-rules.yaml: |-
+    # Custom Falco Rules for your cluster
+
+    - rule: Unauthorized Process in Container
+      desc: Detect unexpected processes in containers
+      condition: >
+        spawned_process and container and
+        not proc.name in (sh, bash, node, python, java, nginx, postgres)
+      output: >
+        Unauthorized process started in container
+        (user=%user.name command=%proc.cmdline container=%container.name image=%container.image.repository)
+      priority: WARNING
+      tags: [container, process]
+
+    - rule: Sensitive File Access
+      desc: Detect access to sensitive files
+      condition: >
+        open_read and container and
+        fd.name in (/etc/shadow, /etc/passwd, /root/.ssh/id_rsa, /root/.ssh/authorized_keys)
+      output: >
+        Sensitive file accessed
+        (user=%user.name file=%fd.name container=%container.name image=%container.image.repository)
+      priority: CRITICAL
+      tags: [file, security]
+
+    - rule: Container Drift Detection
+      desc: Detect file modifications in containers
+      condition: >
+        container and
+        (open_write or rename or remove) and
+        not proc.name in (apt, yum, dnf, apk, npm, pip)
+      output: >
+        File modified in container
+        (user=%user.name file=%fd.name proc=%proc.name container=%container.name)
+      priority: WARNING
+      tags: [container, drift]
+
+# Enable Prometheus metrics
+metrics:
+  enabled: true
+
+# Service Monitor for Prometheus Operator
+serviceMonitor:
+  enabled: true
+  interval: 30s
+
+# Grafana dashboard
+grafanaDashboard:
+  enabled: false
+
+# Falcosidekick integration (for forwarding alerts)
+falcosidekick:
+  enabled: true
+  fullfqdn: false
+
+  config:
+    # Output to stdout/logs
+    debug: false
+
+    # Slack integration (optional)
+    # slack:
+    #   webhookurl: ""
+    #   minimumpriority: "warning"
+
+    # Discord integration (optional)
+    # discord:
+    #   webhookurl: ""
+    #   minimumpriority: "warning"
+
+  # Falcosidekick Web UI
+  webui:
+    enabled: true
+    replicaCount: 1
+
+    service:
+      type: ClusterIP
+      port: 2802
+
+    ingress:
+      enabled: false
+      # annotations:
+      #   cert-manager.io/cluster-issuer: letsencrypt-prod
+      # hosts:
+      #   - host: falco0213.kro.kr
+      #     paths:
+      #       - path: /
+      #         pathType: Prefix
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+# RBAC
+rbac:
+  create: true
+
+# Service Account
+serviceAccount:
+  create: true
+  name: falco
+
+# Node selector to run on all nodes
+nodeSelector: {}
+
+# Tolerations to run on all nodes including masters
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+
+# Run as DaemonSet on all nodes
+daemonset:
+  updateStrategy:
+    type: RollingUpdate
+
+# Priority class
+priorityClassName: ""
+
+# Extra environment variables
+extraEnvVars: []
+
+# Extra volumes
+extraVolumes: []
+extraVolumeMounts: []

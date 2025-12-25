@@ -1,0 +1,113 @@
+# Velero Helm Values
+# Chart: https://github.com/vmware-tanzu/helm-charts/tree/main/charts/velero
+
+# Image configuration
+image:
+  repository: velero/velero
+  tag: v1.15.0
+  pullPolicy: IfNotPresent
+
+# Resource requests
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Init containers for plugins
+initContainers:
+  # AWS plugin for S3-compatible storage (Minio)
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.11.0
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+# Configuration for backup storage
+configuration:
+  # Use existing BackupStorageLocation and VolumeSnapshotLocation
+  backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: velero-backups
+      config:
+        region: minio
+        s3ForcePathStyle: "true"
+        s3Url: http://minio.minio.svc.cluster.local:9000
+        publicUrl: https://s3.minio0213.kro.kr
+
+  volumeSnapshotLocation:
+    - name: default
+      provider: aws
+      config:
+        region: minio
+
+  # Default backup retention
+  defaultBackupTTL: 720h  # 30 days
+
+  # Restore only mode (for disaster recovery)
+  restoreOnlyMode: false
+
+# Credentials for S3 access (from Vault via External Secrets)
+credentials:
+  useSecret: true
+  existingSecret: velero-s3-credentials
+  secretContents: {}
+
+# Backup schedules
+schedules:
+  # Daily full cluster backup
+  daily-backup:
+    disabled: false
+    schedule: "0 2 * * *"  # 2 AM daily
+    template:
+      ttl: 720h  # 30 days
+      includedNamespaces:
+        - "*"
+      excludedNamespaces:
+        - kube-system
+        - kube-public
+        - kube-node-lease
+      snapshotVolumes: true
+
+  # Hourly backup for critical namespaces
+  hourly-critical-backup:
+    disabled: false
+    schedule: "0 * * * *"  # Every hour
+    template:
+      ttl: 168h  # 7 days
+      includedNamespaces:
+        - postgresql
+        - postgresql-dev
+        - vault
+        - gitea
+        - harbor
+      snapshotVolumes: true
+
+# Metrics
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: false
+
+# RBAC
+serviceAccount:
+  server:
+    create: true
+    name: velero
+
+rbac:
+  create: true
+
+# Node selector (optional)
+nodeSelector: {}
+
+# Tolerations (optional)
+tolerations: []
+
+# Affinity (optional)
+affinity: {}

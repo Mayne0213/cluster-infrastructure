@@ -14,3 +14,9 @@ resources:
   - reloader/argocd/reloader.yaml
   - vault/argocd/vault.yaml
   - vault/argocd/vault-secrets.yaml
+
+  # New infrastructure components
+  - velero/argocd/velero.yaml
+  - velero
+  - falco/argocd/falco.yaml
+  - cnpg/argocd/cnpg.yaml
