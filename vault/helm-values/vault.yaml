@@ -19,7 +19,6 @@ server:
       cpu: 50m
       memory: 128Mi
     limits:
-      cpu: null  # Explicitly set to null to remove CPU throttling
       memory: 512Mi
   
   # Ingress 설정
