@@ -92,7 +92,9 @@ schedules:
         # Non-essential namespaces (to save storage)
         - postgresql-dev  # Dev database not needed in disaster recovery
         - harbor          # Rebuildable container images
-        - minio           # Backup storage itself (prevents circular backup)
+        # Note: minio namespace is now included in backup
+        # MinIO PVC data is excluded via pod annotation (backup.velero.io/backup-volumes-excludes)
+        # This backs up MinIO resources but not the data (prevents circular backup)
       snapshotVolumes: true
       defaultVolumesToFsBackup: true
 
