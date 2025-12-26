@@ -32,6 +32,7 @@ spec:
             cpu: 100m
             memory: 256Mi
           limits:
+            cpu: ""  # Empty string to override Helm chart default
             memory: 1Gi
 
         # Falco configuration
