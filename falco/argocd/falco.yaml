@@ -87,10 +87,11 @@ spec:
     namespace: falco
 
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
+    # Auto-sync disabled to allow manual CPU limit removal
+    # automated:
+    #   prune: true
+    #   selfHeal: true
+    #   allowEmpty: false
 
     syncOptions:
       - CreateNamespace=true
