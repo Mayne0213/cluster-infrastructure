@@ -16,7 +16,7 @@ resources:
     cpu: 100m
     memory: 128Mi
   limits:
-    cpu: 500m
+    # cpu: removed to prevent throttling
     memory: 512Mi
 
 # RBAC

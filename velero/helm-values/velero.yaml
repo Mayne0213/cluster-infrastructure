@@ -13,7 +13,7 @@ resources:
     cpu: 50m
     memory: 128Mi
   limits:
-    cpu: 500m
+    # cpu: removed to prevent throttling
     memory: 512Mi
 
 # Init containers for plugins
@@ -37,7 +37,7 @@ nodeAgent:
       cpu: 30m  # Reduced to 30m to fit on mayne-worker-2 (99% CPU usage)
       memory: 256Mi
     limits:
-      cpu: 1000m
+      # cpu: removed to prevent throttling
       memory: 1Gi
 
 # Configuration for backup storage
