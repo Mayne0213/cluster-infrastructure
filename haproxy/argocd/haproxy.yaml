@@ -39,7 +39,7 @@ spec:
           # Resource requests
           resources:
             requests:
-              cpu: 100m
+              cpu: 15m  # Reduced from 100m based on actual usage (9-10m)
               memory: 128Mi
             limits:
               # cpu: removed to prevent throttling
