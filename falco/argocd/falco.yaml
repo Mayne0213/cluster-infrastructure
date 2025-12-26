@@ -29,7 +29,7 @@ spec:
         # Resource requests
         resources:
           requests:
-            cpu: 100m
+            cpu: 30m
             memory: 256Mi
           limits:
             cpu: null  # Delete Helm chart default CPU limit
@@ -65,7 +65,7 @@ spec:
             replicaCount: 1
             resources:
               requests:
-                cpu: 50m
+                cpu: 30m
                 memory: 128Mi
 
         # RBAC
