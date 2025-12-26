@@ -15,7 +15,7 @@ image:
 # Resource requests
 resources:
   requests:
-    cpu: 50m
+    cpu: 40m  # Reduced from 50m for worker-node-2 CPU optimization (actual usage ~39m)
     memory: 256Mi
 
 # Falco configuration
