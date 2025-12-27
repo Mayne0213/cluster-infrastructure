@@ -68,13 +68,6 @@ configuration:
   # Restore only mode (for disaster recovery)
   restoreOnlyMode: false
 
-  # Repository maintenance job configuration
-  # Automatically clean up completed maintenance jobs
-  repositoryMaintenanceJob:
-    repositoryConfigData:
-      global:
-        keepLatestMaintenanceJobs: 1  # Keep only the latest 1 completed job per repository
-
 # Credentials for S3 access (from Vault via External Secrets)
 credentials:
   useSecret: true
