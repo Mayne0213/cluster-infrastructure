@@ -25,7 +25,6 @@ server:
       }
 
       storage "postgresql" {
-        connection_url = "postgres://vault:${VAULT_POSTGRES_PASSWORD}@postgresql-cnpg-rw.postgresql-cnpg.svc.cluster.local:5432/vault?sslmode=disable"
       }
 
       # Optional: Enable Prometheus metrics
@@ -36,9 +35,9 @@ server:
 
   # Environment variables from secrets
   extraSecretEnvironmentVars:
-    - envName: VAULT_POSTGRES_PASSWORD
-      secretName: vault-postgres-password
-      secretKey: password
+    - envName: VAULT_PG_CONNECTION_URL
+      secretName: vault-pg-connection
+      secretKey: connection_url
 
   # 리소스 제한
   resources:
