@@ -40,12 +40,12 @@ spec:
 
         # Environment variables
         env:
-          - name: USERNAME
+          - name: BASIC_AUTH_USERNAME
             valueFrom:
               secretKeyRef:
                 name: velero-ui-secret
                 key: username
-          - name: PASSWORD
+          - name: BASIC_AUTH_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: velero-ui-secret
