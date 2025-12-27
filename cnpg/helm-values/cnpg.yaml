@@ -33,11 +33,11 @@ monitoring:
   # Enable Prometheus PodMonitor
   podMonitorEnabled: true
 
-  # Enable Grafana Dashboard auto-creation
+  # Grafana Dashboard auto-creation disabled due to ConfigMap size limit
+  # Dashboard can be manually imported from Grafana.com (ID: 20417)
+  # https://grafana.com/grafana/dashboards/20417-cloudnativepg/
   grafanaDashboard:
-    create: true
-    labels:
-      grafana_dashboard: "1"  # Label for Grafana sidecar to discover dashboards
+    create: false
 
 # Webhook configuration
 webhook:
