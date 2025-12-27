@@ -50,6 +50,7 @@ spec:
               secretKeyRef:
                 name: velero-ui-secret
                 key: password
+        envFrom: []
 
         # Pod security context
         podSecurityContext:
