@@ -15,7 +15,7 @@ spec:
       targetRevision: v1.16.2
       helm:
         valueFiles:
-          - $values/cert-manager/helm-values/cert-manager.yaml
+          - $values/cert-manager/helm-values.yaml
     # Values file from Git repository
     - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
       targetRevision: main

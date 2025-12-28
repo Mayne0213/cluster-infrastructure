@@ -15,7 +15,7 @@ spec:
       targetRevision: 0.28.1
       helm:
         valueFiles:
-          - $values/vault/helm-values/vault.yaml
+          - $values/vault/helm-values.yaml
     # Values file from Git repository
     - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
       targetRevision: main
