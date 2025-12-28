@@ -35,6 +35,7 @@ spec:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
       - PruneLast=true
+      - RespectIgnoreDifferences=true
 
     retry:
       limit: 5
@@ -42,5 +43,12 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
+
+  # Ignore Deployment differences for CPU limits (set to null)
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jqPathExpressions:
+        - '.spec.template.spec.containers[].resources.limits.cpu'
 
   revisionHistoryLimit: 10
