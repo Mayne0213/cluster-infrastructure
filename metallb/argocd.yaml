@@ -8,73 +8,77 @@ metadata:
 spec:
   project: default
 
-  source:
+  sources:
     # Helm chart from MetalLB repository
-    repoURL: https://metallb.github.io/metallb
-    chart: metallb
-    targetRevision: 0.14.9
-    helm:
-      values: |
-        # Controller configuration
-        controller:
-          enabled: true
-          image:
-            repository: quay.io/metallb/controller
-            tag: v0.14.9
+    - repoURL: https://metallb.github.io/metallb
+      chart: metallb
+      targetRevision: 0.14.9
+      helm:
+        values: |
+          # Controller configuration
+          controller:
+            enabled: true
+            image:
+              repository: quay.io/metallb/controller
+              tag: v0.14.9
 
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              # cpu: removed to prevent throttling
-              memory: 128Mi
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                # cpu: removed to prevent throttling
+                memory: 128Mi
 
-        # Speaker configuration (runs on each node)
-        speaker:
-          enabled: true
-          image:
-            repository: quay.io/metallb/speaker
-            tag: v0.14.9
+          # Speaker configuration (runs on each node)
+          speaker:
+            enabled: true
+            image:
+              repository: quay.io/metallb/speaker
+              tag: v0.14.9
 
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              # cpu: removed to prevent throttling
-              memory: 128Mi
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                # cpu: removed to prevent throttling
+                memory: 128Mi
 
-          # Tolerations to run on all nodes
-          tolerations:
-            - effect: NoSchedule
-              key: node-role.kubernetes.io/master
-            - effect: NoSchedule
-              key: node-role.kubernetes.io/control-plane
+            # Tolerations to run on all nodes
+            tolerations:
+              - effect: NoSchedule
+                key: node-role.kubernetes.io/master
+              - effect: NoSchedule
+                key: node-role.kubernetes.io/control-plane
 
-        # Disable FRR (only needed for BGP mode, we use L2)
-        frr:
-          enabled: false
+          # Disable FRR (only needed for BGP mode, we use L2)
+          frr:
+            enabled: false
 
-        # Prometheus metrics
-        prometheus:
-          scrapeAnnotations: true
-          metricsPort: 7472
+          # Prometheus metrics
+          prometheus:
+            scrapeAnnotations: true
+            metricsPort: 7472
 
-        # RBAC
-        rbac:
-          create: true
-
-        # Service Accounts
-        controller:
-          serviceAccount:
+          # RBAC
+          rbac:
             create: true
-            name: metallb-controller
 
-        speaker:
-          serviceAccount:
-            create: true
-            name: metallb-speaker
+          # Service Accounts
+          controller:
+            serviceAccount:
+              create: true
+              name: metallb-controller
+
+          speaker:
+            serviceAccount:
+              create: true
+              name: metallb-speaker
+    # Configuration files from Git repository (IPAddressPool, L2Advertisement)
+    - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
+      targetRevision: main
+      path: metallb
 
   destination:
     server: https://kubernetes.default.svc

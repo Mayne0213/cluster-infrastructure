@@ -48,7 +48,8 @@ spec:
           # Service configuration
           service:
             type: LoadBalancer
-            annotations: {}
+            annotations:
+              metallb.universe.tf/allow-shared-ip: haproxy
             # Use different IP or port from nginx
             # externalTrafficPolicy: Local
 
