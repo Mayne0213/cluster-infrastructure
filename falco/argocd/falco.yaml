@@ -113,7 +113,9 @@ spec:
       kind: StatefulSet
       jqPathExpressions:
         - '.spec.persistentVolumeClaimRetentionPolicy'
-        - '.spec.volumeClaimTemplates[]?.metadata.creationTimestamp'
-        - '.spec.volumeClaimTemplates[]?.status'
+        - '.spec.volumeClaimTemplates[].metadata.creationTimestamp'
+        - '.spec.volumeClaimTemplates[].status'
+        - '.spec.volumeClaimTemplates[].apiVersion'
+        - '.spec.volumeClaimTemplates[].kind'
 
   revisionHistoryLimit: 10
