@@ -33,6 +33,11 @@ spec:
           extraArgs:
             watch-ingress-without-class: "true"
 
+          # Publish service for ingress status
+          publishService:
+            enabled: true
+            pathOverride: haproxy/haproxy
+
           # Replica count
           replicaCount: 2
 
