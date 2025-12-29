@@ -14,10 +14,10 @@ spec:
     helm:
       valueFiles:
       - $values/cert-manager/helm-values.yaml
-  - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
+  - repoURL: https://github.com/Mayne0213/cluster-infrastructure.git
     targetRevision: main
     ref: values
-  - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
+  - repoURL: https://github.com/Mayne0213/cluster-infrastructure.git
     targetRevision: main
     path: cert-manager
   destination:
