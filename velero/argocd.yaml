@@ -18,6 +18,10 @@ spec:
     - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
       targetRevision: main
       ref: values
+    - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
+      targetRevision: main
+      path: velero
+      kustomize: {}
 
   destination:
     server: https://kubernetes.default.svc
