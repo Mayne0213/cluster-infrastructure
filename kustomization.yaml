@@ -13,8 +13,6 @@ resources:
   - velero/argocd.yaml
   - falco/argocd.yaml
   - cnpg/argocd.yaml
-  - haproxy/argocd.yaml
-  - metallb/argocd.yaml
   - vpa/argocd.yaml
 
   # ArgoCD configuration (no Application, just configuration)
