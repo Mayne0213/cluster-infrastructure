@@ -9,17 +9,18 @@ spec:
   project: default
 
   sources:
-    # Helm chart from Jetstack repository
     - repoURL: https://charts.jetstack.io
       chart: cert-manager
       targetRevision: v1.16.2
       helm:
         valueFiles:
           - $values/cert-manager/helm-values.yaml
-    # Values file from Git repository
     - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
       targetRevision: main
       ref: values
+    - repoURL: https://gitea0213.kro.kr/bluemayne/cluster-infrastructure.git
+      targetRevision: main
+      path: cert-manager
 
   destination:
     server: https://kubernetes.default.svc
