@@ -61,27 +61,7 @@ configMap:
 
   # Access control rules
   access_control:
-    default_policy: deny
-    rules:
-      # Bypass for public services
-      - domain:
-          - mayne.kro.kr
-          - "*.mayne.kro.kr"
-          - jaejadle.kro.kr
-          - "*.jaejadle.kro.kr"
-          - joossameng.kro.kr
-          - "*.joossameng.kro.kr"
-          - jovies.kro.kr
-          - "*.jovies.kro.kr"
-          - minjo0213.kro.kr
-          - "*.minjo0213.kro.kr"
-          - todo0213.kro.kr
-          - "*.todo0213.kro.kr"
-        policy: bypass
-      # One factor for admin services (*0213.kro.kr)
-      - domain:
-          - "*0213.kro.kr"
-        policy: one_factor
+    default_policy: one_factor
 
   # Notifier - filesystem (no email)
   notifier:
