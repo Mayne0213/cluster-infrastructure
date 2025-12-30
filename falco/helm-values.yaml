@@ -114,9 +114,9 @@ falcosidekick:
     #   webhookurl: ""
     #   minimumpriority: "warning"
 
-  # Falcosidekick Web UI
+  # Falcosidekick Web UI (disabled to save ~535MB Redis memory)
   webui:
-    enabled: true
+    enabled: false
     replicaCount: 1
 
     service:
