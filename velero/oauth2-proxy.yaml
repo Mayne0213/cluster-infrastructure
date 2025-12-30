@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oauth2-proxy-secret
+  namespace: velero
+type: Opaque
+stringData:
+  cookie-secret: "abcdefghijklmnopqrstuvwxyz123456"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+  namespace: velero
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: oauth2-proxy
+        image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        args:
+        - --provider=oidc
+        - --oidc-issuer-url=https://auth.mayne.kro.kr/oauth2/openid/velero
+        - --client-id=velero
+        - --client-secret=b2GxS9Cswx5M33REUG7VWcMq0LdV760Y0P9H38cXZfMXGGv4
+        - --cookie-secret=abcdefghijklmnopqrstuvwxyz123456
+        - --email-domain=*
+        - --upstream=http://velero-ui:3000
+        - --http-address=0.0.0.0:4180
+        - --redirect-url=https://velero0213.kro.kr/oauth2/callback
+        - --cookie-secure=true
+        - --ssl-insecure-skip-verify=true
+        - --skip-provider-button=true
+        - --code-challenge-method=S256
+        ports:
+        - containerPort: 4180
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth2-proxy
+  namespace: velero
+spec:
+  selector:
+    app: oauth2-proxy
+  ports:
+  - port: 4180
+    targetPort: 4180

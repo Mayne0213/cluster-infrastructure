@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - vault/velero-secrets.yaml
 - ingress.yaml
+- oauth2-proxy.yaml
