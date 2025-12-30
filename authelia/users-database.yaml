@@ -12,8 +12,6 @@ data:
         disabled: false
         displayname: "Admin"
         email: admin@mayne0213.kro.kr
-        # Default password: changeme (CHANGE THIS!)
-        # Generate new hash: docker run --rm authelia/authelia:latest authelia crypto hash generate argon2
-        password: "$argon2id$v=19$m=65536,t=3,p=4$placeholder$placeholder"
+        password: "$argon2id$v=19$m=65536,t=3,p=4$PHApThq3PclXyjhly4bAwA$ZdC+5EEshnK/MDsQb2fUfpujG3ujcFM7APmqrMgXjsE"
         groups:
           - admins
