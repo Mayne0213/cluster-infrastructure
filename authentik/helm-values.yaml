@@ -49,6 +49,8 @@ postgresql:
   enabled: true
   auth:
     password: "" # Will be auto-generated
+  image:
+    tag: 16
   primary:
     resources:
       requests:
@@ -63,6 +65,8 @@ redis:
   architecture: standalone
   auth:
     enabled: false
+  image:
+    tag: 7.4
   master:
     resources:
       requests:
