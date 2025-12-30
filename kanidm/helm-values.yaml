@@ -1,0 +1,15 @@
+# Kanidm Helm Values
+# Chart: https://datosh.github.io/kanidm/
+
+domain: idm.mayne.kro.kr
+
+replicas: 1
+
+storageClassName: longhorn
+
+logLevel: info
+
+ingress:
+  className: traefik
+  clusterIssuer: letsencrypt-prod
+  tlsSecretName: kanidm-tls
