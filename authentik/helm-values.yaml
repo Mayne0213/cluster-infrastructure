@@ -67,7 +67,9 @@ redis:
   auth:
     enabled: false
   image:
-    tag: 7.4
+    registry: docker.io
+    repository: redis
+    tag: 7-alpine
   master:
     resources:
       requests:
