@@ -12,27 +12,34 @@ server:
   dev:
     enabled: false
 
-  # Standalone mode with file storage
+  # Standalone 비활성화 (HA 사용)
   standalone:
+    enabled: false
+
+  # HA 설정 - PostgreSQL storage (config from External Secret)
+  ha:
     enabled: true
-    config: |
-      ui = true
+    replicas: 3
+    raft:
+      enabled: false
 
-      listener "tcp" {
-        tls_disable = 1
-        address = "[::]:8200"
-        cluster_address = "[::]:8201"
-      }
+  # PVC 비활성화 (PostgreSQL 사용)
+  dataStorage:
+    enabled: false
 
-      storage "file" {
-        path = "/vault/data"
-      }
+  # Config from External Secret
+  volumes:
+    - name: vault-config-secret
+      secret:
+        secretName: vault-config-secret
 
-      # Prometheus metrics
-      telemetry {
-        prometheus_retention_time = "30s"
-        disable_hostname = true
-      }
+  volumeMounts:
+    - name: vault-config-secret
+      mountPath: /vault/userconfig
+      readOnly: true
+
+  # Extra args to use config from secret
+  extraArgs: "-config=/vault/userconfig/extraconfig-from-values.hcl"
 
   # 리소스 제한
   resources:
@@ -56,10 +63,6 @@ server:
       - secretName: vault-tls
         hosts:
           - vault0213.kro.kr
-
-  # HA 비활성화 (단일 인스턴스)
-  ha:
-    enabled: false
 
   # 서비스 타입
   service:
