@@ -68,8 +68,8 @@ redis:
     enabled: false
   image:
     registry: docker.io
-    repository: redis
-    tag: 7-alpine
+    repository: bitnami/redis
+    tag: latest
   master:
     resources:
       requests:
