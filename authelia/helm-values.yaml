@@ -44,8 +44,8 @@ configMap:
   # Session configuration
   session:
     cookies:
-      - domain: mayne.kro.kr
-        authelia_url: https://auth.mayne.kro.kr
+      - domain: kro.kr
+        authelia_url: https://auth0213.kro.kr
 
   # Storage - PostgreSQL (CNPG cluster)
   storage:
