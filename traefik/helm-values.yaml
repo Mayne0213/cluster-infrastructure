@@ -5,6 +5,10 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
+    # 2 replicas
+    deployment:
+      replicas: 2
+
     # Traefik Dashboard 활성화
     dashboard:
       enabled: true

@@ -8,7 +8,7 @@ global:
 server:
   enabled: true
 
-  # Production 모드 - PostgreSQL backend 사용
+  # Production 모드
   dev:
     enabled: false
 
@@ -28,7 +28,7 @@ server:
         path = "/vault/data"
       }
 
-      # Optional: Enable Prometheus metrics
+      # Prometheus metrics
       telemetry {
         prometheus_retention_time = "30s"
         disable_hostname = true
@@ -57,7 +57,7 @@ server:
         hosts:
           - vault0213.kro.kr
 
-  # 고가용성 비활성화 (단일 인스턴스)
+  # HA 비활성화 (단일 인스턴스)
   ha:
     enabled: false
 
