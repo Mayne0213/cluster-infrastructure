@@ -98,6 +98,7 @@ grafanaDashboard:
 falcosidekick:
   enabled: true
   fullfqdn: false
+  replicaCount: 1
 
   config:
     # Output to stdout/logs
