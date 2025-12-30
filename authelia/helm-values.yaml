@@ -1,9 +1,6 @@
 # Authelia Helm Values
 # Chart: https://charts.authelia.com
 
-# Domain configuration
-domain: mayne.kro.kr
-
 # Ingress - disabled, using separate ingress.yaml
 ingress:
   enabled: false
