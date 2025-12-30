@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   # App of Apps Application
   - application.yaml
-
-  # 각 앱의 ArgoCD Application 중앙 관리
   - cert-manager/argocd.yaml
   - external-secrets/argocd.yaml
   - reloader/argocd.yaml
@@ -14,6 +12,7 @@ resources:
   - falco/argocd.yaml
   - cnpg/argocd.yaml
   - vpa/argocd.yaml
+  - traefik/argocd.yaml
 
   # ArgoCD configuration (no Application, just configuration)
   - argocd

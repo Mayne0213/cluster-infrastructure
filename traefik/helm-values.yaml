@@ -1,0 +1,21 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    # Traefik Dashboard 활성화
+    dashboard:
+      enabled: true
+
+    # API 활성화 (Dashboard에서 필요)
+    api:
+      dashboard: true
+      insecure: false
+
+    # ports 설정
+    ports:
+      traefik:
+        expose:
+          default: true
