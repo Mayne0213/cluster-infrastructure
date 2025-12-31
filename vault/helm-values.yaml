@@ -46,7 +46,7 @@ server:
   # 리소스 제한
   resources:
     requests:
-      cpu: 100m
+      cpu: 50m  # Reduced from 100m (actual usage: 24-30m)
       memory: 256Mi
     limits:
       memory: 512Mi
