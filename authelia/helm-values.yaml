@@ -53,7 +53,7 @@ configMap:
       enabled: true
       address: tcp://postgresql-rw.postgresql.svc.cluster.local:5432
       database: authelia
-      username: app
+      username: bluemayne
       timeout: 5s
 
   # Access control rules
