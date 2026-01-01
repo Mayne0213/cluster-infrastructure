@@ -153,8 +153,8 @@ falcosidekick:
         - "--maxmemory 200mb"
         - "--maxmemory-policy allkeys-lru"
 
-    # Use custom secret for authentication
-    existingSecret: falco-ui-secret
+    # Authentication disabled - using Authelia SSO
+    # existingSecret: falco-ui-secret
 
 # RBAC
 rbac:
