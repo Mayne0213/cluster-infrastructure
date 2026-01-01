@@ -77,7 +77,9 @@ spec:
           type: ClusterIP
           port: 3000
 
-        env: []
+        env:
+          - name: BASIC_AUTH_ENABLED
+            value: "false"
         envFrom: []
 
         podSecurityContext:
