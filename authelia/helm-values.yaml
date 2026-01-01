@@ -18,10 +18,16 @@ pod:
     - name: users-database
       configMap:
         name: authelia-config
+    - name: oidc-clients
+      secret:
+        secretName: authelia-oidc-clients
   extraVolumeMounts:
     - name: users-database
       mountPath: /config/users_database.yml
       subPath: users_database.yml
+      readOnly: true
+    - name: oidc-clients
+      mountPath: /secrets/oidc
       readOnly: true
 
 # ConfigMap configuration
@@ -71,10 +77,31 @@ configMap:
     enabled: true
     issuer: mayne.kro.kr
 
-  # Identity providers (OIDC) - can be enabled later
+  # Identity providers (OIDC)
   identity_providers:
     oidc:
-      enabled: false
+      enabled: true
+      cors:
+        endpoints:
+          - authorization
+          - token
+          - revocation
+          - introspection
+          - userinfo
+        allowed_origins_from_client_redirect_uris: true
+      clients:
+        - client_id: minio
+          client_name: MinIO Console
+          client_secret: '{{ secret "/secrets/oidc/MINIO_CLIENT_SECRET" }}'
+          authorization_policy: one_factor
+          redirect_uris:
+            - https://minio.minio0213.kro.kr/oauth_callback
+            - https://minio0213.kro.kr/oauth_callback
+          scopes:
+            - openid
+            - profile
+            - email
+          token_endpoint_auth_method: client_secret_post
 
 # Secret configuration - use existing secret from Vault
 secret:
