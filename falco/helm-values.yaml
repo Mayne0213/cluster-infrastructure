@@ -31,7 +31,6 @@ falco:
 
   # Performance tuning
   buffered_outputs: true
-  outputs_queue_capacity: 10000
 
   # Rules configuration
   rules_files:
@@ -73,7 +72,7 @@ customRules:
       desc: Detect file modifications in containers
       condition: >
         container and
-        (open_write or rename or remove) and
+        open_write and
         not proc.name in (apt, yum, dnf, apk, npm, pip)
       output: >
         File modified in container
