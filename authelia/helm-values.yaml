@@ -81,6 +81,12 @@ configMap:
   identity_providers:
     oidc:
       enabled: true
+      jwks:
+        - key_id: ''
+          algorithm: 'RS256'
+          use: 'sig'
+          key:
+            path: '/secrets/OIDC_ISSUER_PRIVATE_KEY'
       cors:
         endpoints:
           - authorization
