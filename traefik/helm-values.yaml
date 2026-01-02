@@ -32,7 +32,10 @@ spec:
     # API 활성화 (Dashboard에서 필요)
     api:
       dashboard: true
-      insecure: true
+
+    # CLI 추가 인자 (insecure는 helm values에 없어서 직접 추가)
+    additionalArguments:
+      - "--api.insecure=true"
 
     # ports 설정
     ports:
