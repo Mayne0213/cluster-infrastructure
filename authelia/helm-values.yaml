@@ -26,6 +26,8 @@ pod:
             path: HEADLAMP_CLIENT_SECRET
           - key: VAULT_CLIENT_SECRET
             path: VAULT_CLIENT_SECRET
+          - key: IMMICH_CLIENT_SECRET
+            path: IMMICH_CLIENT_SECRET
           - key: identity_providers.oidc.jwks.key
             path: jwks.pem
   extraVolumeMounts:
@@ -40,6 +42,10 @@ pod:
     - name: oidc-secrets
       mountPath: /secrets/VAULT_CLIENT_SECRET
       subPath: VAULT_CLIENT_SECRET
+      readOnly: true
+    - name: oidc-secrets
+      mountPath: /secrets/IMMICH_CLIENT_SECRET
+      subPath: IMMICH_CLIENT_SECRET
       readOnly: true
     - name: oidc-secrets
       mountPath: /secrets/jwks.pem
@@ -140,6 +146,21 @@ configMap:
             - profile
             - email
             - groups
+          token_endpoint_auth_method: client_secret_post
+        - client_id: immich
+          client_name: Immich
+          client_secret:
+            path: /secrets/IMMICH_CLIENT_SECRET
+          public: false
+          authorization_policy: one_factor
+          redirect_uris:
+            - https://immich0213.kro.kr/auth/login
+            - https://immich0213.kro.kr/user-settings
+            - app.immich:///oauth-callback
+          scopes:
+            - openid
+            - profile
+            - email
           token_endpoint_auth_method: client_secret_post
 
 # Secret configuration - use existing secret from Vault
