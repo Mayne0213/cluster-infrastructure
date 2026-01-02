@@ -71,6 +71,33 @@ configMap:
     enabled: true
     issuer: mayne.kro.kr
 
+  # OIDC Identity Provider
+  identity_providers:
+    oidc:
+      enabled: true
+      cors:
+        endpoints:
+          - authorization
+          - token
+          - revocation
+          - introspection
+          - userinfo
+        allowed_origins_from_client_redirect_uris: true
+      clients:
+        - client_id: headlamp
+          client_name: Headlamp
+          client_secret: '$plaintext${{ secret "HEADLAMP_CLIENT_SECRET" }}'
+          public: false
+          authorization_policy: one_factor
+          redirect_uris:
+            - https://kubernetes0213.kro.kr/oidc-callback
+          scopes:
+            - openid
+            - profile
+            - email
+            - groups
+          token_endpoint_auth_method: client_secret_post
+
 # Secret configuration - use existing secret from Vault
 secret:
   existingSecret: authelia-secrets
