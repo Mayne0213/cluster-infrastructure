@@ -32,7 +32,7 @@ spec:
     # API 활성화 (Dashboard에서 필요)
     api:
       dashboard: true
-      insecure: false
+      insecure: true
 
     # ports 설정
     ports:
