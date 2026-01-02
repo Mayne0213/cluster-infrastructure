@@ -33,10 +33,14 @@ spec:
     api:
       dashboard: true
 
+    # Cross-namespace middleware 허용
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+
     # CLI 추가 인자
     additionalArguments:
       - "--api.insecure=true"
-      - "--providers.kubernetescrd.allowCrossNamespace=true"
 
     # ports 설정
     ports:
