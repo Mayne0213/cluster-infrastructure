@@ -18,10 +18,20 @@ pod:
     - name: users-database
       configMap:
         name: authelia-config
+    - name: oidc-secrets
+      secret:
+        secretName: authelia-secrets
+        items:
+          - key: HEADLAMP_CLIENT_SECRET
+            path: HEADLAMP_CLIENT_SECRET
   extraVolumeMounts:
     - name: users-database
       mountPath: /config/users_database.yml
       subPath: users_database.yml
+      readOnly: true
+    - name: oidc-secrets
+      mountPath: /secrets/HEADLAMP_CLIENT_SECRET
+      subPath: HEADLAMP_CLIENT_SECRET
       readOnly: true
 
 # ConfigMap configuration
@@ -86,7 +96,8 @@ configMap:
       clients:
         - client_id: headlamp
           client_name: Headlamp
-          client_secret: '$plaintext${{ secret "HEADLAMP_CLIENT_SECRET" }}'
+          client_secret:
+            path: /secrets/HEADLAMP_CLIENT_SECRET
           public: false
           authorization_policy: one_factor
           redirect_uris:
