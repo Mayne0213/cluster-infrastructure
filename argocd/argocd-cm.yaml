@@ -9,3 +9,6 @@ metadata:
 data:
   # Enable anonymous access (Authelia handles authentication)
   users.anonymous.enabled: "true"
+  # Reconciliation interval (default: 180s)
+  # Set to 24h to reduce memory usage - manual Refresh/Sync when needed
+  timeout.reconciliation: "24h"
