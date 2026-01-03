@@ -18,6 +18,7 @@ resources:
     cpu: 30m
     memory: 256Mi
   limits:
+    cpu: null  # Remove CPU limit to prevent throttling (chart default is 1 core)
     memory: 512Mi  # Prevent OOM
 
 # Falco configuration
