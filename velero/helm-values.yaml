@@ -75,9 +75,10 @@ configuration:
   # This prevents status updates that trigger ArgoCD refreshes
   storeValidationFrequency: 0s
 
-  # Disable backup sync from object storage (user only uses manual backups)
-  # This prevents lastSyncedTime updates every minute
-  backupSyncPeriod: 0s
+  # Disable backup-sync controller (user only uses manual backups)
+  # This prevents lastSyncedTime updates that trigger ArgoCD refreshes
+  disableControllers:
+    - backup-sync
 
 # Credentials for S3 access (from Vault via External Secrets)
 credentials:
