@@ -15,8 +15,10 @@ image:
 # Resource requests
 resources:
   requests:
-    cpu: 30m  # Reduced for CPU optimization to allow CNPG join pod scheduling
+    cpu: 30m
     memory: 256Mi
+  limits:
+    memory: 512Mi  # Prevent OOM
 
 # Falco configuration
 falco:
@@ -117,9 +119,9 @@ falcosidekick:
   resources:
     requests:
       cpu: 10m
-      memory: 64Mi
+      memory: 128Mi
     limits:
-      memory: 256Mi  # Prevent memory leak from accumulating events
+      memory: 512Mi  # Increased to prevent OOM
 
   config:
     # Output to stdout/logs
@@ -168,11 +170,11 @@ falcosidekick:
       resources:
         requests:
           cpu: 10m
-          memory: 128Mi
+          memory: 256Mi
         limits:
-          memory: 512Mi
+          memory: 1Gi  # Increased from 512Mi to prevent OOM (84 restarts)
       extraArgs:
-        - "--maxmemory 400mb"
+        - "--maxmemory 800mb"
         - "--maxmemory-policy allkeys-lru"
 
     # Authentication disabled - using Authelia SSO
