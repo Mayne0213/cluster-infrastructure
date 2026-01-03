@@ -6,3 +6,4 @@ resources:
 - argocd-rbac-cm.yaml
 - argocd-cmd-params-cm.yaml
 - ingress.yaml
+- disable-unused-controllers.yaml
