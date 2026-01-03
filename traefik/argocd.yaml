@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Mayne0213/cluster-infrastructure.git
+    repoURL: https://github.com/K3S-HOME/cluster-infrastructure.git
     targetRevision: main
     path: traefik
   destination:

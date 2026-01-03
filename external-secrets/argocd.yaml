@@ -20,7 +20,7 @@ spec:
     helm:
       valueFiles:
       - $values/external-secrets/helm-values.yaml
-  - repoURL: https://github.com/Mayne0213/cluster-infrastructure.git
+  - repoURL: https://github.com/K3S-HOME/cluster-infrastructure.git
     targetRevision: main
     ref: values
   destination:
