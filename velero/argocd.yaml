@@ -7,6 +7,12 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+  # Ignore BackupStorageLocation status changes (updated every 24s by velero)
+  ignoreDifferences:
+  - group: velero.io
+    kind: BackupStorageLocation
+    jsonPointers:
+    - /status
   sources:
   - repoURL: https://vmware-tanzu.github.io/helm-charts
     chart: velero

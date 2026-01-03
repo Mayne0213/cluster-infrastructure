@@ -7,12 +7,6 @@ image:
   tag: v1.17.1
   pullPolicy: IfNotPresent
 
-# kubectl image for upgrade jobs (bitnamilegacy/kubectl:1.35 doesn't exist)
-kubectl:
-  image:
-    repository: bitnami/kubectl
-    tag: "1.31"
-
 # Resource requests
 resources:
   requests:
@@ -48,10 +42,6 @@ nodeAgent:
 
 # Configuration for backup storage
 configuration:
-  # Disable validation completely (default: 1m causes ArgoCD refresh every 24s)
-  # Since we only do manual backups, no periodic validation needed
-  storeValidationFrequency: "0"
-
   # Use existing BackupStorageLocation and VolumeSnapshotLocation
   backupStorageLocation:
     - name: default
