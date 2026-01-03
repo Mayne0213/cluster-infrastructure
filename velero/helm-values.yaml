@@ -42,6 +42,10 @@ nodeAgent:
 
 # Configuration for backup storage
 configuration:
+  # Disable validation completely (default: 1m causes ArgoCD refresh every 24s)
+  # Since we only do manual backups, no periodic validation needed
+  storeValidationFrequency: "0"
+
   # Use existing BackupStorageLocation and VolumeSnapshotLocation
   backupStorageLocation:
     - name: default
