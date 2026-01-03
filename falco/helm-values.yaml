@@ -174,10 +174,10 @@ falcosidekick:
           cpu: 10m
           memory: 256Mi
         limits:
-          memory: 1Gi  # Increased from 512Mi to prevent OOM (84 restarts)
-      extraArgs:
-        - "--maxmemory 800mb"
-        - "--maxmemory-policy allkeys-lru"
+          memory: 1Gi
+      customConfig:
+        - maxmemory 800mb
+        - maxmemory-policy allkeys-lru
 
     # Authentication disabled - using Authelia SSO
     # existingSecret: falco-ui-secret
