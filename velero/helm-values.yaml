@@ -1,6 +1,9 @@
 # Velero Helm Values
 # Chart: https://github.com/vmware-tanzu/helm-charts/tree/main/charts/velero
 
+# Skip CRD upgrade job (avoids kubectl image dependency)
+upgradeCRDs: false
+
 # Image configuration
 image:
   repository: velero/velero
@@ -67,6 +70,10 @@ configuration:
 
   # Restore only mode (for disaster recovery)
   restoreOnlyMode: false
+
+  # Disable BackupStorageLocation validation (user only uses manual backups)
+  # This prevents status updates every 24s that trigger ArgoCD refreshes
+  storeValidationFrequency: "0"
 
 # Credentials for S3 access (from Vault via External Secrets)
 credentials:
