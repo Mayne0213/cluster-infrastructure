@@ -7,6 +7,12 @@ image:
   tag: v1.17.1
   pullPolicy: IfNotPresent
 
+# kubectl image for upgrade jobs (bitnamilegacy/kubectl:1.35 doesn't exist)
+kubectl:
+  image:
+    repository: bitnami/kubectl
+    tag: "1.31"
+
 # Resource requests
 resources:
   requests:
