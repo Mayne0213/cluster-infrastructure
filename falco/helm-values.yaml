@@ -104,8 +104,10 @@ metrics:
 
 # Service Monitor for Prometheus Operator
 serviceMonitor:
-  enabled: true
+  create: true
   interval: 30s
+  labels:
+    release: prometheus
 
 # Grafana dashboard
 grafanaDashboard:
