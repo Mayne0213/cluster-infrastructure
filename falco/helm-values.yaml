@@ -150,49 +150,9 @@ falcosidekick:
     #   webhookurl: ""
     #   minimumpriority: "warning"
 
-  # Falcosidekick Web UI
+  # Falcosidekick Web UI - disabled, using Grafana dashboard instead
   webui:
-    enabled: true
-    replicaCount: 1
-    disableauth: true  # Disable basic auth - using Authelia SSO
-    ttl: 21600  # 6 hours - events older than this are auto-deleted
-
-    service:
-      type: ClusterIP
-      port: 2802
-
-    ingress:
-      enabled: false
-      # annotations:
-      #   cert-manager.io/cluster-issuer: letsencrypt-prod
-      # hosts:
-      #   - host: falco0213.kro.kr
-      #     paths:
-      #       - path: /
-      #         pathType: Prefix
-
-    resources:
-      requests:
-        cpu: 30m
-        memory: 128Mi
-      limits:
-        # cpu: removed to prevent throttling
-        memory: 512Mi
-
-    redis:
-      storageEnabled: true
-      resources:
-        requests:
-          cpu: 10m
-          memory: 256Mi
-        limits:
-          memory: 1Gi
-      customConfig:
-        - maxmemory 800mb
-        - maxmemory-policy allkeys-lru
-
-    # Authentication disabled - using Authelia SSO
-    # existingSecret: falco-ui-secret
+    enabled: false
 
 # RBAC
 rbac:
