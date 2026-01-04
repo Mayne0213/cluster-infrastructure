@@ -134,6 +134,7 @@ falcosidekick:
     loki:
       hostport: "http://loki.loki.svc.cluster.local:3100"
       minimumpriority: ""  # Send all priorities
+      format: "json"  # JSON format for easier parsing in Grafana
 
     # Slack integration (optional)
     # slack:
