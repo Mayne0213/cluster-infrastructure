@@ -130,6 +130,11 @@ falcosidekick:
     # Output to stdout/logs
     debug: false
 
+    # Loki integration - send events directly to Loki
+    loki:
+      hostport: "http://loki.loki.svc.cluster.local:3100"
+      minimumpriority: ""  # Send all priorities
+
     # Slack integration (optional)
     # slack:
     #   webhookurl: ""
