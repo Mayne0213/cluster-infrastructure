@@ -35,6 +35,10 @@ falco:
   # Performance tuning
   buffered_outputs: true
 
+  # Rate limiting - reduce duplicate alerts
+  outputs_rate: 1        # Max 1 alert per second per rule
+  outputs_max_burst: 10  # Allow burst of 10 alerts
+
   # Rules configuration
   rules_files:
     - /etc/falco/falco_rules.yaml
